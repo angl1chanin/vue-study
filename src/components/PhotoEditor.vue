@@ -2,8 +2,7 @@
     <div class="container">
         <div class="flex">
             <div class="img-wrapper">
-                <img v-if="isCatVisible" src="../assets/images/cat.jpg" alt="">
-                <!-- <p v-else>Кот съеден</p> -->
+                <img v-show="isCatVisible" src="../assets/images/cat.jpg" alt="">
             </div>
             <div class="controls">
                 <h1>Шаверма-кот</h1>
