@@ -5,6 +5,7 @@
                 <img 
                 v-show="isCatVisible"
                 :class="imgFilters"
+                :style="imgStyle"
                 src="../assets/images/cat.jpg" 
                 />
             </div>
@@ -15,8 +16,27 @@
                     <button :class="imgFilters.sepia ? 'active' : ''" @click="imgFilters.sepia = !imgFilters.sepia" type="button">Сепия</button>
                     <button :class="imgFilters.border ? 'active' : ''" @click="imgFilters.border = !imgFilters.border" type="button">Рамка</button>
                     <button :class="imgFilters.small ? 'active' : ''" @click="imgFilters.small = !imgFilters.small" type="button">Уменьшить</button>
-                    <button :class="isCatVisible ? 'active' : ''" @click="isCatVisible = !isCatVisible">Показать / спрятать</button>
+                    <button @click="isCatVisible = !isCatVisible">Показать / спрятать</button>
                 </div>
+                <h3>Размер</h3>
+                <label>
+                    Ширина: {{imgSizes.currentWidth}}
+                    <input type="range"
+                    :value="imgSizes.currentWidth"
+                    @input="imgSizes.currentWidth = $event.target.value"
+                    :min="imgSizes.minWidth"
+                    :max="imgSizes.maxWidth"
+                    />
+                </label>
+                <label>
+                    Высота: {{imgSizes.currentHeight}}
+                    <input type="range"
+                    :value="imgSizes.currentHeight"
+                    @input="imgSizes.currentHeight = $event.target.value"
+                    :min="imgSizes.minHeight"
+                    :max="imgSizes.maxHeight"
+                    />
+                </label>
             </div>
         </div>
     </div>
@@ -33,6 +53,20 @@ export default {
                 sepia: false,
                 border: false,
                 small: false,
+            },
+            imgSizes: {
+                maxWidth: 680,
+                maxHeight: 480,
+                currentWidth: 680,
+                currentHeight: 480,
+            }
+        }
+    },
+    computed: {
+        imgStyle() {
+            return {
+                width: `${this.imgSizes.currentWidth}px`,
+                height: `${this.imgSizes.currentHeight}px`,
             }
         }
     }
@@ -40,8 +74,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .flex {
+        display: flex;
+    }
   .container {
-    margin-top: 40px;
+    max-width: 1170px;
+    margin: 0 auto;
   }
   .controls {
     margin-left: 20px;
@@ -66,6 +104,7 @@ img {
 
   button {
     margin-right: 10px;
+    padding: 10px 20px;
     &.active {
             background-color: #dbdbdb;
         }
