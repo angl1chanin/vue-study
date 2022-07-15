@@ -15,8 +15,7 @@
                 <div class="btn-group flex">
                     <button :class="imgFilters.sepia ? 'active' : ''" @click="imgFilters.sepia = !imgFilters.sepia" type="button">Сепия</button>
                     <button :class="imgFilters.border ? 'active' : ''" @click="imgFilters.border = !imgFilters.border" type="button">Рамка</button>
-                    <button :class="imgFilters.small ? 'active' : ''" @click="imgFilters.small = !imgFilters.small" type="button">Уменьшить</button>
-                    <button @click="isCatVisible = !isCatVisible">Показать / спрятать</button>
+                    <button :class="imgFilters.shadow ? 'active' : ''" @click="imgFilters.shadow = !imgFilters.shadow" type="button">Тень</button>
                 </div>
                 <h3>Размер</h3>
                 <label>
@@ -37,6 +36,18 @@
                     :max="imgSizes.maxHeight"
                     />
                 </label>
+                <h4>Поворот</h4>
+                <label>
+                    Угол: {{imgRotate.currentAngle}}
+                    <input type="range"
+                    :min="imgRotate.minAngle"
+                    :max="imgRotate.maxAngle"
+                    :value="imgRotate.currentAngle"
+                    @input="imgRotate.currentAngle = $event.target.value"
+                    />
+                </label>
+                <button v-if="isCatVisible" @click="isCatVisible = !isCatVisible">Спрятать</button>
+                <button v-else @click="isCatVisible = !isCatVisible">Показать</button>
             </div>
         </div>
     </div>
@@ -52,13 +63,17 @@ export default {
             imgFilters: {
                 sepia: false,
                 border: false,
-                small: false,
+                shadow: false,
             },
             imgSizes: {
                 maxWidth: 680,
                 maxHeight: 480,
                 currentWidth: 680,
                 currentHeight: 480,
+            },
+            imgRotate: {
+                currentAngle: 0,
+                maxAngle: 360,
             }
         }
     },
@@ -67,6 +82,7 @@ export default {
             return {
                 width: `${this.imgSizes.currentWidth}px`,
                 height: `${this.imgSizes.currentHeight}px`,
+                transform: `rotate(${this.imgRotate.currentAngle}deg)`
             }
         }
     }
@@ -85,9 +101,9 @@ export default {
     margin-left: 20px;
   }
   .img-wrapper {
-    width: 640px;
-    height: 480px;
-    background-color: #cecece;
+    position: relative;
+    z-index: -1;
+    width: 680px;
   }
 img {
     transition: 0.2s ease;
@@ -97,8 +113,8 @@ img {
     &.border {
         border: 5px dashed #464646
     }
-    &.small {
-        width: 400px;
+    &.shadow {
+        box-shadow: 5px 5px 15px 5px #000000;
     }
 }
 
