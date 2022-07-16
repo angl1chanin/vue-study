@@ -1,14 +1,14 @@
 <template>
-    <PhotoEditor />
+    <ProductList />
 </template>
 
 <script>
-import PhotoEditor from './components/PhotoEditor'
+import ProductList from './components/ProductList'
 
 export default {
   name: 'App',
   components: {
-    PhotoEditor,
+    ProductList,
   }
 }
 </script>
